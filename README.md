@@ -3,8 +3,8 @@
 📋 **Descrição:** Sistema web completo para pizzaria com carrinho de compras dinâmico, checkout seguro e gestão de usuários. Desenvolvido em PHP com design responsivo e foco na experiência do usuário.
 
 🌐 **Acesso ao Sistema:**
-🔗 **URL:** http://localhost/pizzaria/index.php
-⚠️ **Nota:** Requer configuração local com XAMPP/WAMP para funcionar
+- 🔗 **URL:** http://localhost/pizzaria/index.php
+- ⚠️ **Nota:** Requer configuração local com XAMPP/WAMP para funcionar
 
 🚀 **Funcionalidades Principais:**
 - 🛒 **Carrinho Dinâmico** - Adicionar, remover e alterar quantidades em tempo real
