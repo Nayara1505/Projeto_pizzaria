@@ -4,7 +4,6 @@ include_once('config.php');
 
 if (isset($_POST['submit']))
 {
-    // Coletar dados SEM mysqli_real_escape_string (não necessário com prepared statements)
     $nome = trim($_POST['nome']);
     $email = trim($_POST['email']);
     $cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']);
@@ -14,8 +13,6 @@ if (isset($_POST['submit']))
     $numero = trim($_POST['numero']);
     $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT); 
 
-    // ========== VALIDAÇÕES ADICIONAIS ==========
-    // Validar formato de email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo "<script>
                 alert('Por favor, insira um email válido!');
@@ -24,7 +21,6 @@ if (isset($_POST['submit']))
         exit;
     }
 
-    // Validar CPF (exatamente 11 dígitos)
     if (strlen($cpf) != 11 || !is_numeric($cpf)) {
         echo "<script>
                 alert('CPF deve conter exatamente 11 dígitos numéricos!');
@@ -33,7 +29,6 @@ if (isset($_POST['submit']))
         exit;
     }
 
-    // Validar telefone (10 ou 11 dígitos - celular ou fixo)
     if (strlen($telefone) < 10 || strlen($telefone) > 11 || !is_numeric($telefone)) {
         echo "<script>
                 alert('Telefone deve conter 10 ou 11 dígitos numéricos!');
@@ -41,9 +36,7 @@ if (isset($_POST['submit']))
               </script>";
         exit;
     }
-    // ========== FIM DAS VALIDAÇÕES ==========
 
-    // VERIFICAÇÃO DE EMAIL EXISTENTE (também deve usar prepared statement)
     $check_stmt = mysqli_prepare($conexao, "SELECT email FROM usuarios WHERE email = ?");
     mysqli_stmt_bind_param($check_stmt, "s", $email);
     mysqli_stmt_execute($check_stmt);
@@ -59,7 +52,6 @@ if (isset($_POST['submit']))
     }
     mysqli_stmt_close($check_stmt);
     
-    // INSERÇÃO PRINCIPAL
     $stmt = mysqli_prepare($conexao, 
         "INSERT INTO usuarios(nome, email, cpf, telefone, cidade, endereco, numero, senha) 
          VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -159,4 +151,5 @@ if (isset($_POST['submit']))
     </div>
 
 </body>
+
 </html>
