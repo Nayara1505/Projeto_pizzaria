@@ -7,13 +7,11 @@ if(!isset($_SESSION['usuario_id'])){
     exit;
 }
 
-// Verificar se carrinho está vazio
 if(!isset($_SESSION['carrinho']) || empty($_SESSION['carrinho'])){
     header("Location: ver_carrinho.php");
     exit;
 }
 
-// Calcular totais
 $subtotal = 0;
 $quantidade_total = 0;
 
@@ -25,17 +23,11 @@ foreach($_SESSION['carrinho'] as $item) {
 $frete = 4.00; 
 $total = $subtotal + $frete;
 
-// Processar pedido
 if(isset($_POST['finalizar_pedido'])) {
     $metodo_pagamento = $_POST['metodo_pagamento'];
     
-    // Aqui você salvaria o pedido no banco de dados
-    // incluindo o método de pagamento escolhido
-    
-    // Limpar carrinho após compra
     $_SESSION['carrinho'] = [];
     
-    // Redirecionar para página de sucesso
     header("Location: pedido_sucesso.php");
     exit;
 }
@@ -320,4 +312,5 @@ if(isset($_POST['finalizar_pedido'])) {
 
 </script>
 </body>
+
 </html>
