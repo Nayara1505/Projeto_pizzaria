@@ -4,14 +4,12 @@ include_once('config.php');
 
 if(isset($_POST['submit']))
 {
-    // Validação básica
     $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
     $senha = $_POST['senha'];
 
     if(!$email || empty($senha)) {
         echo "<script>alert('Dados inválidos');</script>";
     } else {
-        // Usando prepared statements para prevenir SQL Injection
         $sql = "SELECT id, nome, email, senha FROM usuarios WHERE email = ?";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("s", $email);
@@ -21,7 +19,6 @@ if(isset($_POST['submit']))
         if($result->num_rows > 0) {
             $user = $result->fetch_assoc();
             
-            // Verificar senha com hash (assumindo que está usando password_hash)
             if(password_verify($senha, $user['senha'])) {
                 $_SESSION['usuario_id'] = $user['id'];
                 $_SESSION['nome'] = $user['nome'];
@@ -30,7 +27,6 @@ if(isset($_POST['submit']))
                 header("Location: index.php");
                 exit;
             } else {
-                // Mensagem genérica para não revelar qual campo está errado
                 echo "<script>alert('Credenciais inválidas');</script>";
             }
         } else {
@@ -83,4 +79,5 @@ if(isset($_POST['submit']))
         </div>
     </div>
 </body>
+
 </html>
